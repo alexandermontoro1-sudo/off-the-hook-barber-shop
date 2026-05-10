@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Off the Hook Barber Shop</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--black:#0a0a0a;
+--red:#c0392b;
+--cream:#f5f0eb;
+--gray:#1a1a1a;
+--lightgray:#2a2a2a;
+--text:#e8e0d8;
+--accent:#e74c3c;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Georgia',serif;background:var(--black);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,10,10,0.95);border-bottom:2px solid var(--red);padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center}
+.nav-logo{font-size:1.1rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--cream)}
+.nav-logo span{color:var(--red)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-family:'Arial',sans-serif;font-size:0.78rem;letter-spacing:2px;text-transform:uppercase;color:var(--text);transition:color 0.2s}
+.nav-links a:hover{color:var(--red)}
+.nav-cta{background:var(--red);color:#fff;padding:0.5rem 1.2rem;font-family:'Arial',sans-serif;font-size:0.75rem;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s}
+.nav-cta:hover{background:var(--accent)}
+
+/* HERO */
+.hero{position:relative;height:100vh;min-height:600px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,0.5) 0%,rgba(10,10,10,0.75) 60%,rgba(10,10,10,0.95) 100%)}
+.hero-content{position:relative;z-index:2;text-align:center;padding:0 1.5rem;max-width:800px}
+.hero-tag{font-family:'Arial',sans-serif;font-size:0.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:block}
+.hero h1{font-size:clamp(2.5rem,7vw,5.5rem);font-weight:700;line-height:1.05;text-transform:uppercase;letter-spacing:2px;color:#fff;margin-bottom:0.5rem}
+.hero h1 span{color:var(--red)}
+.hero-sub{font-family:'Arial',sans-serif;font-size:clamp(0.85rem,2vw,1rem);letter-spacing:3px;text-transform:uppercase;color:var(--cream);opacity:0.8;margin-bottom:2rem}
+.hero-divider{width:60px;height:3px;background:var(--red);margin:0 auto 2rem}
+.btn-primary{display:inline-block;background:var(--red);color:#fff;padding:1rem 2.5rem;font-family:'Arial',sans-serif;font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;transition:background 0.2s,transform 0.2s}
+.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}
+.btn-outline{display:inline-block;border:2px solid var(--cream);color:var(--cream);padding:0.95rem 2.2rem;font-family:'Arial',sans-serif;font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;margin-left:1rem;transition:all 0.2s}
+.btn-outline:hover{background:var(--cream);color:var(--black)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:2;font-family:'Arial',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:var(--cream);opacity:0.5}
+
+/* MARQUEE */
+.marquee-bar{background:var(--red);padding:0.6rem 0;overflow:hidden;white-space:nowrap}
+.marquee-track{display:inline-block;animation:marquee 20s linear infinite}
+.marquee-track span{font-family:'Arial',sans-serif;font-size:0.7rem;letter-spacing:4px;text-transform:uppercase;color:#fff;padding:0 2rem}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* SECTION BASE */
+section{padding:5rem 1.5rem}
+.container{max-width:1100px;margin:0 auto}
+.section-label{font-family:'Arial',sans-serif;font-size:0.65rem;letter-spacing:5px;text-transform:uppercase;color:var(--red);margin-bottom:0.75rem}
+.section-title{font-size:clamp(1.8rem,4vw,3rem);text-transform:uppercase;letter-spacing:2px;color:#fff;margin-bottom:0.5rem}
+.section-rule{width:50px;height:3px;background:var(--red);margin-bottom:2.5rem}
+
+/* SERVICES */
+.services{background:var(--gray)}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1px;background:var(--lightgray)}
+.service-card{background:var(--gray);padding:1.8rem 1.5rem;transition:background 0.2s}
+.service-card:hover{background:var(--lightgray)}
+.service-name{font-size:1rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#fff;margin-bottom:0.4rem}
+.service-desc{font-family:'Arial',sans-serif;font-size:0.78rem;color:#888;line-height:1.5;margin-bottom:0.8rem}
+.service-price{font-family:'Arial',sans-serif;font-size:1.1rem;font-weight:700;color:var(--red)}
+.services-cta{margin-top:3rem;text-align:center}
+
+/* ABOUT */
+.about{background:var(--black)}
+.about-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-visual{position:relative}
+.about-img-wrap{position:relative;overflow:hidden}
+.about-img-wrap img{width:100%;height:420px;object-fit:cover;display:block;filter:grayscale(30%)}
+.about-badge{position:absolute;bottom:-1rem;right:-1rem;background:var(--red);padding:1.5rem;text-align:center;min-width:100px}
+.about-badge-num{font-size:2rem;font-weight:700;color:#fff;display:block;line-height:1}
+.about-badge-text{font-family:'Arial',sans-serif;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.8)}
+.about-text p{font-family:'Arial',sans-serif;font-size:0.92rem;line-height:1.8;color:#aaa;margin-bottom:1.2rem}
+.about-text p strong{color:var(--cream)}
+.about-stats{display:flex;gap:2rem;margin-top:2rem}
+.stat{border-left:3px solid var(--red);padding-left:1rem}
+.stat-num{font-size:1.8rem;font-weight:700;color:#fff;display:block}
+.stat-label{font-family:'Arial',sans-serif;font-size:0.65rem;letter-spacing:3px;text-transform:uppercase;color:#666}
+
+/* TESTIMONIALS */
+.testimonials{background:var(--gray)}
+.no-reviews{text-align:center;padding:3rem 0}
+.no-reviews p{font-family:'Arial',sans-serif;font-size:0.9rem;color:#666;margin-bottom:1.5rem}
+.no-reviews .stars{color:var(--red);font-size:1.5rem;letter-spacing:4px;margin-bottom:1rem}
+
+/* HOURS & CONTACT */
+.contact{background:var(--black)}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+.hours-table{width:100%;border-collapse:collapse;font-family:'Arial',sans-serif}
+.hours-table tr{border-bottom:1px solid var(--lightgray)}
+.hours-table td{padding:0.75rem 0;font-size:0.85rem;color:#aaa}
+.hours-table td:first-child{color:var(--cream);font-weight:600;text-transform:uppercase;letter-spacing:1px;font-size:0.75rem}
+.hours-table td:last-child{text-align:right;color:var(--red)}
+.contact-info{display:flex;flex-direction:column;gap:1.5rem}
+.contact-item-label{font-family:'Arial',sans-serif;font-size:0.6rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:0.3rem}
+.contact-item-val{font-size:1.05rem;color:var(--cream)}
+.contact-item-val a{transition:color 0.2s}
+.contact-item-val a:hover{color:var(--red)}
+.map-placeholder{background:var(--lightgray);height:180px;display:flex;align-items:center;justify-content:center;margin-top:1.5rem;border-left:4px solid var(--red)}
+.map-placeholder span{font-family:'Arial',sans-serif;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:#555}
+.cta-block{background:var(--red);padding:3rem;margin-top:2rem;text-align:center}
+.cta-block h3{font-size:1.5rem;text-transform:uppercase;letter-spacing:2px;color:#fff;margin-bottom:0.5rem}
+.cta-block p{font-family:'Arial',sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.8);margin-bottom:1.5rem}
+.btn-white{display:inline-block;background:#fff;color:var(--red);padding:0.9rem 2.2rem;font-family:'Arial',sans-serif;font-size:0.8rem;letter-spacing:3px;text-transform:uppercase;font-weight:700;transition:all 0.2s}
+.btn-white:hover{background:var(--black);color:#fff}
+
+/* FOOTER */
+footer{background:#050505;border-top:2px solid var(--lightgray);padding:2.5rem 1.5rem}
+.footer-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;align-items:start}
+.footer-brand .nav-logo{font-size:1rem;margin-bottom:0.5rem;display:block}
+.footer-brand p{font-family:'Arial',sans-serif;font-size:0.75rem;color:#555;line-height:1.6}
+.footer-col h4{font-family:'Arial',sans-serif;font-size:0.65rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:0.8rem}
+.footer-col p,
+.footer-col a{font-family:'Arial',sans-serif;font-size:0.78rem;color:#555;display:block;line-height:1.8;transition:color 0.2s}
+.footer-col a:hover{color:var(--red)}
+.footer-bottom{max-width:1100px;margin:2rem auto 0;padding-top:1.5rem;border-top:1px solid var(--lightgray);display:flex;justify-content:space-between;align-items:center;font-family:'Arial',sans-serif;font-size:0.65rem;color:#333}
+.footer-bottom a{color:#444;transition:color 0.2s}
+.footer-bottom a:hover{color:var(--red)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.nav-links{display:none}
+.hero-content .btn-outline{margin-left:0;margin-top:1rem;display:block;width:fit-content;margin:1rem auto 0}
+.about-inner{grid-template-columns:1fr}
+.about-badge{right:0}
+.contact-inner{grid-template-columns:1fr}
+.footer-inner{grid-template-columns:1fr;gap:1.5rem}
+.footer-bottom{flex-direction:column;gap:0.5rem;text-align:center}
+.cta-block{padding:2rem 1rem}
+}
+@media(max-width:480px){
+.hero-content .btn-primary,.hero-content .btn-outline{display:block;width:100%;text-align:center;margin-left:0}
+.about-stats{flex-direction:column;gap:1rem}
+}
+
+/* ===== SCROLLING TESTIMONIALS ===== */
+.testimonials-section{padding:100px 40px;background:rgba(0,0,0,0.3);border-top:1px solid rgba(255,255,255,0.06);overflow:hidden}
+.testimonials-header{text-align:center;max-width:480px;margin:0 auto 56px}
+.testimonials-badge{display:inline-block;font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.12);padding:5px 14px;border-radius:100px;margin-bottom:16px;color:rgba(255,255,255,.45)}
+.testimonials-heading{font-size:clamp(26px,3.5vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:12px;color:rgba(255,255,255,.9)}
+.testimonials-sub{font-size:14px;color:rgba(255,255,255,.5);line-height:1.7}
+.testimonials-cols{display:flex;justify-content:center;gap:16px;max-height:680px;overflow:hidden;mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent);-webkit-mask-image:linear-gradient(to bottom,transparent,black 20%,black 80%,transparent)}
+.t-col{flex:0 0 280px;display:flex;flex-direction:column}
+.t-col--2{display:none}.t-col--3{display:none}
+@media(min-width:700px){.t-col--2{display:flex}}
+@media(min-width:1024px){.t-col--3{display:flex}}
+.t-track{display:flex;flex-direction:column;gap:16px;animation:t-scroll 15s linear infinite}
+.t-track--b{animation-duration:19s}.t-track--c{animation-duration:17s}
+@keyframes t-scroll{from{transform:translateY(0)}to{transform:translateY(-50%)}}
+.t-track:hover{animation-play-state:paused}
+.t-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:22px;flex-shrink:0;transition:border-color .25s}
+.t-card:hover{border-color:rgba(255,255,255,.2)}
+.t-stars{color:#f5c518;font-size:12px;margin-bottom:12px;letter-spacing:2px}
+.t-text{font-size:13px;line-height:1.75;color:rgba(255,255,255,.65)}
+.t-author{display:flex;align-items:center;gap:10px;margin-top:16px}
+.t-avatar{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.t-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.9)}
+.t-role{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.35);text-transform:uppercase}
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">Off the <span>Hook</span></span>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Hours</a></li>
+  </ul>
+  <a href="tel:+14045894625" class="nav-cta">Book Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img src="photos/ai_hero.jpg" alt="Off the Hook Barber Shop">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Atlanta's Neighborhood Barbershop</span>
+    <h1>Off the <span>Hook</span><br>Barber Shop</h1>
+    <p class="hero-sub">Sharp Cuts. No Nonsense. Every Time.</p>
+    <div class="hero-divider"></div>
+    <a href="tel:+14045894625" class="btn-primary">Call to Book</a>
+    <a href="#services" class="btn-outline">Our Services</a>
+  </div>
+  <span class="scroll-hint">↓ Scroll</span>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar">
+  <div class="marquee-track">
+    <span>Skin Fade</span><span>•</span>
+    <span>Taper Fade</span><span>•</span>
+    <span>Beard Trim</span><span>•</span>
+    <span>Hot Towel Shave</span><span>•</span>
+    <span>Line Up</span><span>•</span>
+    <span>Edge Up</span><span>•</span>
+    <span>Kids Cuts</span><span>•</span>
+    <span>Hair Design</span><span>•</span>
+    <span>Skin Fade</span><span>•</span>
+    <span>Taper Fade</span><span>•</span>
+    <span>Beard Trim</span><span>•</span>
+    <span>Hot Towel Shave</span><span>•</span>
+    <span>Line Up</span><span>•</span>
+    <span>Edge Up</span><span>•</span>
+    <span>Kids Cuts</span><span>•</span>
+    <span>Hair Design</span><span>•</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <p class="section-label">What We Do</p>
+    <h2 class="section-title">Services</h2>
+    <div class="section-rule"></div>
+    <div class="services-grid">
+      <div class="service-card">
+        <p class="service-name">Skin Fade</p>
+        <p class="service-desc">Faded clean down to the skin — smooth, sharp, and built to last.</p>
+        <p class="service-price">$30+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Taper Fade</p>
+        <p class="service-desc">Classic taper with a clean blend on the sides and back.</p>
+        <p class="service-price">$28+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Beard Trim &amp; Shape Up</p>
+        <p class="service-desc">Sculpted lines, trimmed tight. Your beard, looking right.</p>
+        <p class="service-price">$15+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Hot Towel Straight Razor Shave</p>
+        <p class="service-desc">Old-school precision — hot towel prep, straight razor finish.</p>
+        <p class="service-price">$35+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Line Up &amp; Edge Up</p>
+        <p class="service-desc">Crisp edges, defined lines. Makes any cut look fresh again.</p>
+        <p class="service-price">$15+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Classic Scissor Cut</p>
+        <p class="service-desc">Hand-cut with shears for texture, shape, and natural movement.</p>
+        <p class="service-price">$30+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Kids Haircut</p>
+        <p class="service-desc">For the young ones. Patient hands, sharp results, no drama.</p>
+        <p class="service-price">$20+</p>
+      </div>
+      <div class="service-card">
+        <p class="service-name">Hair Design &amp; Part</p>
+        <p class="service-desc">Custom designs and cut-in parts for those who want to stand out.</p>
+        <p class="service-price">$10+</p>
+      </div>
+    </div>
+    <div class="services-cta">
+      <a href="tel:+14045894625" class="btn-primary">Call to Book Your Cut</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual">
+        <div class="about-img-wrap">
+          <img src="photos/ai_hero.jpg" alt="Inside Off the Hook Barber Shop">
+        </div>
+        <div class="about-badge">
+          <span class="about-badge-num">ATL</span>
+          <span class="about-badge-text">Barbershop</span>
+        </div>
+      </div>
+      <div class="about-text">
+        <p class="section-label">About Us</p>
+        <h2 class="section-title">The Chair Doesn't Lie</h2>
+        <div class="section-rule"></div>
+        <p>Off the Hook is a neighborhood spot built on one thing: <strong>a clean cut, done right, every time.</strong> No frills, no waiting around for someone who doesn't know what they're doing — just skilled barbers, sharp tools, and a chair you'll want to come back to.</p>
+        <p>We keep it real here. Whether you're bringing in your kid for his first real fade or you're a regular looking to maintain your look, <strong>you get the same attention and the same standard.</strong> That's how it's supposed to work.</p>
+        <p>Walk-ins welcome. Appointments appreciated. <strong>Good vibes always.</strong></p>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num">8</span>
+            <span class="stat-label">Services Offered</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">No Nonsense</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">ATL</span>
+            <span class="stat-label">Rooted &amp; Proud</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <p class="section-label">Customer Reviews</p>
+    <h2 class="section-title">Word on the Street</h2>
+    <div class="section-rule"></div>
+    <div class="no-reviews">
+      <div class="stars">★ ★ ★ ★ ★</div>
+      <p>Reviews are coming — the shop is earning them one cut at a time.<br>Stop in and see for yourself.</p>
+      <a href="tel:+14045894625" class="btn-primary">Book Your First Visit</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT & HOURS -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div>
+        <p class="section-label">Hours</p>
+        <h2 class="section-title">When We're Open</h2>
+        <div class="section-rule"></div>
+        <table class="hours-table">
+          <tr><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr><td>Saturday</td><td>8:00 AM – 5:00 PM</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <div class="map-placeholder">
+          <span>Atlanta, Georgia</span>
+        </div>
+      </div>
+      <div>
+        <p class="section-label">Get In Touch</p>
+        <h2 class="section-title">Find Us</h2>
+        <div class="section-rule"></div>
+        <div class="contact-info">
+          <div>
+            <p class="contact-item-label">Phone</p>
+            <p class="contact-item-val"><a href="tel:+14045894625">(404) 589-4625</a></p>
+          </div>
+          <div>
+            <p class="contact-item-label">Location</p>
+            <p class="contact-item-val">Atlanta, Georgia</p>
+          </div>
+          <div>
+            <p class="contact-item-label">Instagram</p>
+            <p class="contact-item-val"><a href="https://instagram.com/" target="_blank" rel="noopener">@offthehookbarbershop</a></p>
+          </div>
+          <div>
+            <p class="contact-item-label">Walk-Ins</p>
+            <p class="contact-item-val">Always Welcome</p>
+          </div>
+        </div>
+        <div class="cta-block">
+          <h3>Ready for a Fresh Cut?</h3>
+          <p>Call us and lock in your spot. No app required.</p>
+          <a href="tel:+14045894625" class="btn-white">Call (404) 589-4625</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="nav-logo">Off the <span>Hook</span></span>
+      <p>A neighborhood barbershop built on sharp cuts and straight talk. Atlanta's own.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#contact">Hours &amp; Contact</a>
+      <a href="tel:+14045894625">Book a Cut</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a href="tel:+14045894625">(404) 589-4625</a>
+      <p>Atlanta, Georgia</p>
+      <a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Off the Hook Barber Shop. All rights reserved.</span>
+    <a href="https://altodigital.com" target="_blank" rel="noopener">Site by Alto Digital</a>
+  </div>
+</footer>
+
+</body>
+</html>
